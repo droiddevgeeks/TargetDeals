@@ -74,10 +74,10 @@ dependencies {
   //testing
   testImplementation "android.arch.core:core-testing:1.1.1"
   androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
-  testImplementation "junit:junit:$junit_version"
   testImplementation "org.mockito:mockito-inline:$mockito_version"
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
-  testImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 
   //hilt
   implementation "com.google.dagger:hilt-android:$hilt_version"

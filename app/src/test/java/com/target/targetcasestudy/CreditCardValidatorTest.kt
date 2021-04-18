@@ -1,8 +1,9 @@
 package com.target.targetcasestudy
 
 import com.target.targetcasestudy.data.validateCreditCard
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 /**
  * Feel free to make modifications to these unit tests! Remember, you have full technical control
@@ -11,9 +12,12 @@ import org.junit.Test
 class CreditCardValidatorTest {
   @Test
   fun `is credit card number valid`() {
-    Assert.assertTrue(
-      "valid credit card number should yield true",
-      validateCreditCard("4539976741512043")
+    assertTrue(validateCreditCard("4539976741512043"))
+  }
+
+  @Test
+  fun `Should fail for invalid credit card number`() {
+    assertFalse(validateCreditCard("4539976712341512043")
     )
   }
 }
