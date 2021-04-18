@@ -1,10 +1,13 @@
 package com.target.targetcasestudy.ui.payment
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.animation.doOnEnd
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import com.target.targetcasestudy.R
@@ -26,6 +29,7 @@ import com.target.targetcasestudy.databinding.DialogPaymentBinding
 class PaymentDialogFragment : DialogFragment() {
 
     private lateinit var binding: DialogPaymentBinding
+    private lateinit var appearAnimation: ObjectAnimator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,16 +45,48 @@ class PaymentDialogFragment : DialogFragment() {
         setInputListener()
     }
 
+    override fun onStart() {
+        super.onStart()
+        handleDialogAppearAnimation()
+    }
+
+    private fun handleDialogAppearAnimation() {
+        appearAnimation = ObjectAnimator.ofPropertyValuesHolder(
+            dialog?.window?.decorView,
+            PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f),
+            PropertyValuesHolder.ofFloat("scaleY", 0.0f, 1.0f),
+            PropertyValuesHolder.ofFloat("alpha", 0.0f, 1.0f)
+        ).apply {
+            duration = 400L
+            start()
+        }
+    }
+
     private fun setInputListener() {
         with(binding) {
-            cancel.setOnClickListener { dismiss() }
+            cancel.setOnClickListener { handleDialogDisappearAnimation() }
             submit.setOnClickListener {
                 Toast.makeText(context, R.string.thanks_message, Toast.LENGTH_SHORT).show()
-                dismiss()
+                handleDialogDisappearAnimation()
             }
             cardNumber.addTextChangedListener {
                 submit.isEnabled = validateCreditCard(it.toString())
             }
+        }
+    }
+
+    private fun handleDialogDisappearAnimation() {
+        with(appearAnimation) {
+            reverse()
+            doOnEnd { dismiss() }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (::appearAnimation.isInitialized) {
+            appearAnimation.cancel()
+            appearAnimation.removeAllUpdateListeners()
         }
     }
 

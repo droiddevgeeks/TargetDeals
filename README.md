@@ -50,6 +50,9 @@ Some guidelines:
   your approach.
 - Be sure the app looks great on a variety of screen sizes!
 
+### Application Demo
+<img src="https://github.com/droiddevgeeks/TargetDeals/blob/master/mockups/DealsDemo.gif" width="30%" height="40%" />
+
 
 
 ### Libraries
